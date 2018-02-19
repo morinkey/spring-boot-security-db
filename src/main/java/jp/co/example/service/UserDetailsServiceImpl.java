@@ -26,6 +26,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Collection<GrantedAuthority> authorities = 
                 AuthorityUtils.createAuthorityList("ROLE_USER");
         List<Account> accounts = userDao.findByName(username);
+        if (accounts == null || accounts.size() == 0) {
+            return null;
+        }
         User user = new User(
                 accounts.get(0).getName(),
                 accounts.get(0).getPassword(),
